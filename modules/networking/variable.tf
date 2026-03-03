@@ -5,19 +5,30 @@ variable "vpc_cidr_block" {
 }
 
 variable "azs" {
-  description = "The availability zones for the VPC"
-  type        = string
-
+  type        = list(string)
+  description = "List of Availability Zones to use for subnets"
 }
 
-variable "public_subnet_cidr_block" {
-  description = "The CIDR blocks for the public subnets"
-  type        = string
-
+variable "az_count" {
+  type        = number
+  description = "Number of Availability Zones to use"
+  default     = 2
 }
 
-variable "private_subnet_cidr_block" {
-  description = "The CIDR blocks for the private subnets"
+variable "environment" {
+  description = "Deployment environment label used in resource naming"
   type        = string
+  default     = "dev"
 }
+
+# variable "public_subnet_cidr_block" {
+#   description = "The CIDR blocks for the public subnets"
+#   type        = string
+
+# }
+
+# variable "private_subnet_cidr_block" {
+#   description = "The CIDR blocks for the private subnets"
+#   type        = string
+# }
 

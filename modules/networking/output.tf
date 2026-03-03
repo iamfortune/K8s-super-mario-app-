@@ -4,6 +4,6 @@ output "vpc_id" {
 }
 
 output "eip" {
-    description = "Elastic IP of the nat gateway"
-    value = aws_eip.mario_nat_eip.address
+  description = "Elastic IP of the nat gateway"
+  value       = aws_eip.mario_nat_eip.address
 }
