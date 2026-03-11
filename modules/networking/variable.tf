@@ -9,10 +9,9 @@ variable "azs" {
   description = "List of Availability Zones to use for subnets"
 }
 
-variable "az_count" {
-  type        = number
-  description = "Number of Availability Zones to use"
-  default     = 2
+variable "cluster_name" {
+  description = "EKS cluster name used for subnet discovery tags"
+  type        = string
 }
 
 variable "environment" {
@@ -31,4 +30,3 @@ variable "environment" {
 #   description = "The CIDR blocks for the private subnets"
 #   type        = string
 # }
-

@@ -17,7 +17,9 @@ resource "aws_subnet" "mario_public_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "mario-public-subnet-${var.environment}-${count.index + 1}"
+    Name                                        = "mario-public-subnet-${var.environment}-${count.index + 1}"
+    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -25,12 +27,14 @@ resource "aws_subnet" "mario_public_subnet" {
 resource "aws_subnet" "mario_private_subnet" {
   count                   = length(var.azs)
   vpc_id                  = aws_vpc.mario_vpc.id
-  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, count.index + var.az_count)
+  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, count.index + length(var.azs))
   availability_zone       = var.azs[count.index]
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "mario-private-subnet-${var.environment}-${count.index + 1}"
+    Name                                        = "mario-private-subnet-${var.environment}-${count.index + 1}"
+    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
 }
