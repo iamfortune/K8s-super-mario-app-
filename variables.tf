@@ -30,3 +30,7 @@ variable "cluster_name" {
   description = "eks cluster name"
   type        = string
 }
+variable "node_group_name" {
+  description = "node group name"
+  type        = string
+}

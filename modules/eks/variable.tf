@@ -8,6 +8,10 @@ variable "subnets_id" {
   type        = list(string)
 }
 
+variable "private_subnets_id" {
+  description = "List of private subnet IDs"
+  type        = list(string)
+}
 variable "eks_version" {
   description = "The version of eks_cluster"
   default     = "1.31"
@@ -15,9 +19,19 @@ variable "eks_version" {
 }
 
 variable "eks_cluster_role_arn" {
-  type = string
+  description = "ARN of the eks clutser"
+  type        = string
 }
 
+variable "eks_node_group_name" {
+  description = "node group name"
+  type        = string
+}
+
+variable "eks_node_role_arn" {
+  description = "node role arn"
+  type        = string
+}
 
 # variable "dependency" {
 #     type = string 
