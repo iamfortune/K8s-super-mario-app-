@@ -33,6 +33,12 @@ variable "eks_node_role_arn" {
   type        = string
 }
 
-# variable "dependency" {
-#     type = string 
-# }
+variable "node_instance_types" {
+  description = "EC2 instance types for the managed node group"
+  type        = list(string)
+}
+
+variable "iam_role_arn" {
+  description = "The IAM Principal ARN which requires Authentication"
+  type        = string
+}
