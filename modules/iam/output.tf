@@ -17,3 +17,7 @@ output "eks_node_role_name" {
   description = "Name of Eks node group role"
   value       = aws_iam_role.mario_eks_node_role.name
 }
+
+output "eks_cluster_policy_attachment" {
+  value = aws_iam_role_policy_attachment.mario_eks_cluster_policy
+}

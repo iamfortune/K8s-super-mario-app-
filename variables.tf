@@ -25,3 +25,25 @@ variable "azs" {
 #   description = "The CIDR blocks for the private subnets"
 #   type        = string
 # }
+
+variable "cluster_name" {
+  description = "eks cluster name"
+  type        = string
+}
+variable "node_group_name" {
+  description = "node group name"
+  type        = string
+}
+
+variable "node_instance_types" {
+  description = "EC2 instance types for the EKS managed node group"
+  type        = list(string)
+  default     = ["t3.micro"]
+}
+
+variable "cluster_admin_principal_arn" {
+  description = "IAM principal ARN to grant EKS cluster admin access. Set this explicitly if Terraform runs through an assumed role."
+  type        = string
+  default     = null
+  nullable    = true
+}
