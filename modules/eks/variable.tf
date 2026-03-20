@@ -38,6 +38,11 @@ variable "node_instance_types" {
   type        = list(string)
 }
 
+variable "node_security_group_id" {
+  description = "Security group ID to attach to worker nodes via launch template"
+  type        = string
+}
+
 variable "iam_role_arn" {
   description = "The IAM Principal ARN which requires Authentication"
   type        = string

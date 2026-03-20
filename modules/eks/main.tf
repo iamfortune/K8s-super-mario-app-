@@ -11,6 +11,14 @@ resource "aws_eks_cluster" "mario_cluster" {
     subnet_ids = var.subnets_id
   }
 
+  enabled_cluster_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
+   ]
+
 }
 
 resource "aws_eks_access_entry" "mario_cluster_access_entry" {
@@ -29,17 +37,37 @@ resource "aws_eks_access_policy_association" "mario_cluster_admin" {
   }
 }
 
+resource "aws_launch_template" "mario_nodes" {
+  name_prefix = "${var.cluster_name}-node-lt"
+
+  vpc_security_group_ids = [
+    var.node_security_group_id,
+    aws_eks_cluster.mario_cluster.vpc_config[0].cluster_security_group_id
+  ]
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "${var.cluster_name}-node"
+    }
+  }
+}
+
 resource "aws_eks_node_group" "mario_node" {
   cluster_name    = aws_eks_cluster.mario_cluster.name
   node_group_name = var.eks_node_group_name
   node_role_arn   = var.eks_node_role_arn
-  instance_types  = var.node_instance_types
   subnet_ids      = var.private_subnets_id
+
+  launch_template {
+    id      = aws_launch_template.mario_nodes.id
+    version = "$Latest"
+  }
 
 
 
   scaling_config {
-    desired_size = 1
+    desired_size = 2
     max_size     = 3
     min_size     = 2
   }
@@ -47,6 +75,4 @@ resource "aws_eks_node_group" "mario_node" {
   update_config {
     max_unavailable = 1
   }
-
-
 }
